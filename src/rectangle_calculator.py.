@@ -30,11 +30,15 @@ while True:
     except ValueError as e:
         print(f"Помилка: {e} Спробуйте ще раз\n")
 # Обчислення
-if stavka == 0:
-    platej = kredit / termin
-else:
-    monthly = (stavka / 100) / 12
-    platej = kredit * (monthly * (1 + monthly) ** termin) / ((1 + monthly) ** termin - 1)
+try:
+    if stavka == 0:
+        platej = kredit / termin
+    else:
+        monthly = (stavka / 100) / 12
+        platej = kredit * (monthly * (1 + monthly) ** termin) / ((1 + monthly) ** termin - 1)
+except OverflowError:
+    print("\nПомилка: введені значення занадто великі, обчислення неможливе.")
+    raise SystemExit(1)
 
 payment = platej * termin
 pereplata = payment - kredit
